@@ -1,6 +1,7 @@
 import React from 'react'
 import { push } from 'react-router-redux'
 import { bindActionCreators } from 'redux'
+import { Grid, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import {
   increment,
@@ -8,24 +9,49 @@ import {
   decrement,
   decrementAsync
 } from '../../modules/counter'
+import Images from '../../images'
+import './style.css'
+
+const allAltCoins = [
+  {
+    type: 'doge',
+    name: 'Dogecoin',
+  },
+  {
+    type: 'litecoin',
+    name: 'Litecoin',
+  },
+  {
+    type: 'monero',
+    name: 'Monero',
+  }
+]
+
+const AltCoin = props => (
+  <a onClick={props.onClick} className='altCoinLink'>
+    <Col xs={12} sm={4} md={4} lg={4} className='altCoinContainer'>
+      <img src={Images[props.coin.type]} className="altCoinLogo"/>
+      <Row>
+        <div className='altCoinCost'>$750.23</div>
+      </Row>
+    </Col>
+  </a>
+)
+
+const getAllAltCoins = (props) => {
+  return allAltCoins.map((coin) => {
+    return (
+      <AltCoin key={coin.type} onClick={() => props.history.push(`/coin-details/${coin.type}`)} coin={coin} />
+    )
+  })
+}
 
 const Home = props => (
-  <div>
-    <h1>Home</h1>
-    <p>Count: {props.count}</p>
-
-    <p>
-      <button onClick={props.increment} disabled={props.isIncrementing}>Increment</button>
-      <button onClick={props.incrementAsync} disabled={props.isIncrementing}>Increment Async</button>
-    </p>
-
-    <p>
-      <button onClick={props.decrement} disabled={props.isDecrementing}>Decrementing</button>
-      <button onClick={props.decrementAsync} disabled={props.isDecrementing}>Decrement Async</button>
-    </p>
-
-    <p><button onClick={() => props.changePage()}>Go to about page via redux</button></p>
-  </div>
+  <Grid>
+    <Row>
+      {getAllAltCoins(props)}
+    </Row>
+  </Grid>
 )
 
 const mapStateToProps = state => ({
