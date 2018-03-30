@@ -8,41 +8,23 @@ import {
   decrement,
   decrementAsync
 } from '../../modules/counter'
-import Images from '../../images'
-import './style.css'
-
-const allAltCoins = [
-  {
-    type: 'doge',
-    name: 'Dogecoin',
-  },
-  {
-    type: 'litecoin',
-    name: 'Litecoin',
-  },
-  {
-    type: 'monero',
-    name: 'Monero',
-  }
-]
-
-const AltCoin = props => (
-  <div className='altCoinContainer'>
-    <img src={Images[props.coin.type]} className="altCoinLogo"/>
-  </div>
-)
-
-const getAllAltCoins = (props) => {
-  return allAltCoins.map((coin) => {
-    return (
-      <AltCoin coin={coin} />
-    )
-  })
-}
 
 const Home = props => (
   <div>
-    {getAllAltCoins()}
+    <h1>Home</h1>
+    <p>Count: {props.count}</p>
+
+    <p>
+      <button onClick={props.increment} disabled={props.isIncrementing}>Increment</button>
+      <button onClick={props.incrementAsync} disabled={props.isIncrementing}>Increment Async</button>
+    </p>
+
+    <p>
+      <button onClick={props.decrement} disabled={props.isDecrementing}>Decrementing</button>
+      <button onClick={props.decrementAsync} disabled={props.isDecrementing}>Decrement Async</button>
+    </p>
+
+    <p><button onClick={() => props.changePage()}>Go to about page via redux</button></p>
   </div>
 )
 
