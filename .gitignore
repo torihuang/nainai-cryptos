@@ -1,5 +1,8 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
+# swap files
+*.swp
+
 # dependencies
 /node_modules
 
@@ -8,6 +11,12 @@
 
 # production
 /build
+
+# css
+/src/*.css
+/src/**/*.css
+/src/**/**/*.css
+/src/**/**/**/*.css
 
 # misc
 .DS_Store
@@ -19,3 +28,4 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+tests
