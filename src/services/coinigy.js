@@ -1,10 +1,12 @@
 //run "npm install socketcluster-client" in terminal before attempting to use
 import socketCluster from 'socketcluster-client';
+import config from '../devConfig.js'
 
+// This would be securely saved as environment variables in a real app
 const api_credentials =
 {
-  apiKey: "893f0acc193d534bb23b564e0505e40d",
-  apiSecret: "d7fafccb50c423eec7028f1d2e6349fa"
+  apiKey: config.coinigyKey,
+  apiSecret: config.coinigySecret,
 }
 
 const options = {

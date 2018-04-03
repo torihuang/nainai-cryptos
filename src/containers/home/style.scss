@@ -1,6 +1,53 @@
 @import '../../index.scss';
 
-.altCoinCost {
+.altCoinName {
   margin-top: 20px;
   font-size: 36px;
+  color: black;
+}
+
+.altCoinName:visited {
+  text-decoration: none;
+  color: black;
+}
+
+.altCoinName:link {
+  text-decoration: none;
+  color: black;
+}
+
+.altCoinName:active {
+  text-decoration: none;
+  color: black;
+}
+
+.altCoinName:hover {
+  text-decoration: none;
+  color: $red;
+}
+
+.altCoinCost {
+  margin-top: 10px;
+  font-size: 24px;
+  color: black;
+}
+
+.altCoinCost:visited {
+  text-decoration: none;
+  color: black;
+}
+
+.altCoinCost:link {
+  text-decoration: none;
+  color: black;
+}
+
+.altCoinCost:active {
+  text-decoration: none;
+  color: black;
+}
+
+.altCoinCost:hover {
+  text-decoration: none;
+  color: $red;
 }
