@@ -1,7 +1,7 @@
 const images = {
-  doge: require('./doge.png'),
-  litecoin: require('./litecoin.png'),
-  monero: require('./monero.png'),
+  DOGE: require('./DOGE.png'),
+  LTC: require('./LTC.png'),
+  XMR: require('./XMR.png'),
 }
 
 export default images

@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
     "history": "^4.7.2",
+    "node-sass-chokidar": "^1.2.2",
+    "npm-run-all": "^4.1.2",
     "react": "^16.3.0",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.3.0",
@@ -13,7 +16,8 @@
     "react-scripts": "1.1.1",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "socketcluster-client": "^11.0.0"
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/ -o src/",

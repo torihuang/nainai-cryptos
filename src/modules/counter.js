@@ -1,40 +1,30 @@
-export const INCREMENT_REQUESTED = 'counter/INCREMENT_REQUESTED'
-export const INCREMENT = 'counter/INCREMENT'
+import CryptoCompare from '../services/cryptocompare'
+
+export const HISTORIC_DATA_REQUESTED = 'counter/HISTORIC_DATA_REQUESTED'
+export const GET_HISTORIC_DATA = 'counter/GET_HISTORIC_DATA'
 export const DECREMENT_REQUESTED = 'counter/DECREMENT_REQUESTED'
 export const DECREMENT = 'counter/DECREMENT'
 
 const initialState = {
-  count: 0,
-  isIncrementing: false,
-  isDecrementing: false
+  coinHistoricalData: [],
+  isLoadingData: false,
+  errorMessage: ''
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case INCREMENT_REQUESTED:
+    case HISTORIC_DATA_REQUESTED:
       return {
         ...state,
-        isIncrementing: true
+        isLoadingData: true
       }
 
-    case INCREMENT:
+    case GET_HISTORIC_DATA:
       return {
         ...state,
-        count: state.count + 1,
-        isIncrementing: !state.isIncrementing
-      }
-
-    case DECREMENT_REQUESTED:
-      return {
-        ...state,
-        isDecrementing: true
-      }
-
-    case DECREMENT:
-      return {
-        ...state,
-        count: state.count - 1,
-        isDecrementing: !state.isDecrementing
+        isLoadingData: false,
+        coinHistoricalData: action.coinHistoricalData,
+        errorMessage: action.errorMessage,
       }
 
     default:
@@ -42,54 +32,20 @@ export default (state = initialState, action) => {
   }
 }
 
-export const increment = () => {
+// Get historical data from cryptocompare based on coin type
+export const updateHistoricData = (coinType) => {
   return dispatch => {
     dispatch({
-      type: INCREMENT_REQUESTED
+      type: HISTORIC_DATA_REQUESTED
     })
 
-    dispatch({
-      type: INCREMENT
-    })
-  }
-}
-
-export const incrementAsync = () => {
-  return dispatch => {
-    dispatch({
-      type: INCREMENT_REQUESTED
-    })
-
-    return setTimeout(() => {
-      dispatch({
-        type: INCREMENT
+    return CryptoCompare.getHistoricData(coinType)
+      .then((res) => {
+        dispatch({
+          type: GET_HISTORIC_DATA,
+          errorMessage: res.error ? res.error : '',
+          coinHistoricalData: res.error ? [] : res,
+        })
       })
-    }, 3000)
-  }
-}
-
-export const decrement = () => {
-  return dispatch => {
-    dispatch({
-      type: DECREMENT_REQUESTED
-    })
-
-    dispatch({
-      type: DECREMENT
-    })
-  }
-}
-
-export const decrementAsync = () => {
-  return dispatch => {
-    dispatch({
-      type: DECREMENT_REQUESTED
-    })
-
-    return setTimeout(() => {
-      dispatch({
-        type: DECREMENT
-      })
-    }, 3000)
   }
 }

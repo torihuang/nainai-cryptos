@@ -3,26 +3,21 @@ import { push } from 'react-router-redux'
 import { bindActionCreators } from 'redux'
 import { Grid, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux'
-import {
-  increment,
-  incrementAsync,
-  decrement,
-  decrementAsync
-} from '../../modules/counter'
 import Images from '../../images'
+// import Coinigy from '../../services/coinigy'
 import './style.css'
 
 const allAltCoins = [
   {
-    type: 'doge',
+    type: 'DOGE',
     name: 'Dogecoin',
   },
   {
-    type: 'litecoin',
+    type: 'LTC',
     name: 'Litecoin',
   },
   {
-    type: 'monero',
+    type: 'XMR',
     name: 'Monero',
   }
 ]
@@ -41,7 +36,7 @@ const AltCoin = props => (
 const getAllAltCoins = (props) => {
   return allAltCoins.map((coin) => {
     return (
-      <AltCoin key={coin.type} onClick={() => props.history.push(`/coin-details/${coin.type}`)} coin={coin} />
+      <AltCoin key={coin.type} onClick={() => props.changePage(coin.type)} coin={coin} />
     )
   })
 }
@@ -55,17 +50,11 @@ const Home = props => (
 )
 
 const mapStateToProps = state => ({
-  count: state.counter.count,
-  isIncrementing: state.counter.isIncrementing,
-  isDecrementing: state.counter.isDecrementing
+  isLoadingData: state.counter.isLoadingData,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  increment,
-  incrementAsync,
-  decrement,
-  decrementAsync,
-  changePage: () => push('/about-us')
+  changePage: (coinType) => push(`/coin-details/${coinType}`)
 }, dispatch)
 
 export default connect(
