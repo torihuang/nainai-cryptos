@@ -4,4 +4,27 @@
   font-family: $header;
   font-size: 60px;
   margin: auto 0;
+  text-decoration: none;
+  color: black;
+}
+
+.headerText:link {
+  text-decoration: none;
+  color: black;
+}
+
+.headerText:hover {
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+}
+
+.headerText:active {
+  text-decoration: none;
+  color: black;
+}
+
+.headerText:visited {
+  text-decoration: none;
+  color: black;
 }

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { Grid, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import Images from '../../images'
-// import Coinigy from '../../services/coinigy'
+import Coinigy from '../../services/coinigy'
 import './style.css'
 
 const allAltCoins = [
@@ -26,6 +26,9 @@ const AltCoin = props => (
   <a onClick={props.onClick} className='altCoinLink'>
     <Col xs={12} sm={4} md={4} lg={4} className='altCoinContainer'>
       <img src={Images[props.coin.type]} className="altCoinLogo"/>
+      <Row className='altCoinName'>
+        <div className='altCoinName'>{`${props.coin.name} - ${props.coin.type}`}</div>
+      </Row>
       <Row>
         <div className='altCoinCost'>$750.23</div>
       </Row>
