@@ -7,7 +7,7 @@ import './style.css'
 const App = () => (
   <div>
     <header>
-      <div className='headerText'>NaiNai Cryptos</div>
+      <Link to="/" className='headerText'>NaiNai Cryptos</Link>
     </header>
 
     <main>

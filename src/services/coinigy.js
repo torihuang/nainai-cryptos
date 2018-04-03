@@ -26,15 +26,17 @@ SCsocket.on('connect', function (status) {
 
   SCsocket.emit("auth", api_credentials, function (err, token) {
     if (!err && token) {
-      const scChannel = SCsocket.subscribe("TRADE-OK--BTC--CNY");
-      console.log(scChannel);
+      const scChannel = SCsocket.subscribe("ORDER-BITF--LTC--BTC");
+      // const scChannel = SCsocket.subscribe("TICKER");
+      // const scChannel = SCsocket.subscribe("TICKER");
+      console.log('scChannel', scChannel);
       scChannel.watch(function (data) {
         console.log(data);
       });
 
       SCsocket.emit("exchanges", null, function (err, data) {
         if (!err) {
-          console.log(data);
+          console.log('exchanges', data);
         } else {
           console.log(err)
         }
@@ -42,7 +44,7 @@ SCsocket.on('connect', function (status) {
 
       SCsocket.emit("channels", "OK", function (err, data) {
         if (!err) {
-          console.log(data);
+          console.log('channels', data);
         } else {
           console.log(err)
         }

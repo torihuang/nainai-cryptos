@@ -6,3 +6,19 @@ body {
 header {
   background-color: #BFCFCC;
   height: 100px; }
+
+.altCoinContainer {
+  align-items: center;
+  text-align: center; }
+
+.altCoinLogo {
+  height: 200px;
+  margin-top: 20px;
+  transition: transform .2s;
+  width: 200px; }
+
+.altCoinLogo:hover {
+  transform: scale(1.1); }
+
+.altCoinLink:hover {
+  cursor: pointer; }
