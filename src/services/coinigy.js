@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 
 const socket = io.connect('wss://streamer.cryptocompare.com');
-const subscription = ['2~Poloniex~DOGE~BTC', '2~Poloniex~LTC~BTC',, '2~Poloniex~XMR~BTC', ];
+const subscription = ['2~Poloniex~DOGE~BTC', '2~Poloniex~LTC~BTC', '2~Poloniex~XMR~BTC'];
 
 // Example input
 // 2~Poloniex~DOGE~BTC~4~1522940008~8812.37148306~0.00352494~5465046~67360667.6564569~26.79880285~ce8

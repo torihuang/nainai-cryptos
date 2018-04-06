@@ -7,7 +7,7 @@ import Images from '../../images'
 import Coinigy from '../../services/coinigy'
 import {
   updateCurrentCoinValue,
-} from '../../modules/counter'
+} from '../../modules/cointracker'
 import './style.css'
 
 const allAltCoins = [
@@ -28,7 +28,7 @@ const allAltCoins = [
 const AltCoin = props => (
   <a onClick={props.onClick} className='altCoinLink'>
     <Col xs={12} sm={4} md={4} lg={4} className='altCoinContainer'>
-      <img src={Images[props.coin.type]} className="altCoinLogo"/>
+      <img alt={props.coin.type} src={Images[props.coin.type]} className="altCoinLogo"/>
       <Row className='altCoinName'>
         <div className='altCoinName'>{`${props.coin.name} - ${props.coin.type}`}</div>
       </Row>
@@ -74,10 +74,10 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  doge: state.counter.doge,
-  ltc: state.counter.ltc,
-  xmr: state.counter.xmr,
-  isLoadingData: state.counter.isLoadingData,
+  doge: state.cointracker.doge,
+  ltc: state.cointracker.ltc,
+  xmr: state.cointracker.xmr,
+  isLoadingData: state.cointracker.isLoadingData,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
