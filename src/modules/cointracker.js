@@ -1,8 +1,8 @@
 import CryptoCompare from '../services/cryptocompare'
 
-export const HISTORIC_DATA_REQUESTED = 'counter/HISTORIC_DATA_REQUESTED'
-export const GET_HISTORIC_DATA = 'counter/GET_HISTORIC_DATA'
-export const UPDATE_CURRENT_COIN_VALUE = 'counter/UPDATE_CURRENT_COIN_VALUE'
+export const HISTORIC_DATA_REQUESTED = 'cointracker/HISTORIC_DATA_REQUESTED'
+export const GET_HISTORIC_DATA = 'cointracker/GET_HISTORIC_DATA'
+export const UPDATE_CURRENT_COIN_VALUE = 'cointracker/UPDATE_CURRENT_COIN_VALUE'
 
 const initialState = {
   coinHistoricalData: [],

@@ -7,7 +7,7 @@ import ReactChartJS from 'react-chartjs'
 import Images from '../../images'
 import {
   updateHistoricData,
-} from '../../modules/counter'
+} from '../../modules/cointracker'
 import './style.css'
 
 const LineChart = ReactChartJS.Line
@@ -106,7 +106,7 @@ class CoinDetails extends React.Component {
       return (
         <Grid className='altCoinDetailsContainer'>
           <Row className='altCoinContainer'>
-            <img src={Images[this.props.match.params.coinType]} className="altCoinLogo"/>
+            <img alt={this.props.match.params.coinType} src={Images[this.props.match.params.coinType]} className="altCoinLogo"/>
           </Row>
           <Row className='altCoinCostChart'>
             {this.renderLineChart()}
@@ -133,8 +133,8 @@ class CoinDetails extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  coinHistoricalData: state.counter.coinHistoricalData,
-  isLoadingData: state.counter.isLoadingData,
+  coinHistoricalData: state.cointracker.coinHistoricalData,
+  isLoadingData: state.cointracker.isLoadingData,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
