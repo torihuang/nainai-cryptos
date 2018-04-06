@@ -12,10 +12,6 @@ import './style.css'
 
 const LineChart = ReactChartJS.Line
 
-const printProps = function printProps(props) {
-  console.log('props', props);
-}
-
 class CoinDetails extends React.Component {
   constructor(props) {
     super(props)
@@ -27,7 +23,7 @@ class CoinDetails extends React.Component {
     this.props.updateHistoricData(this.props.match.params.coinType)
     this.historicDataUpdateInterval = setInterval(() => {
       this.props.updateHistoricData(this.props.match.params.coinType)
-    }, 60000)
+    }, 10000)
   }
 
   componentWillUnmount() {
@@ -43,7 +39,7 @@ class CoinDetails extends React.Component {
   }
 
   renderHistoricalData() {
-    return this.props.coinHistoricalData.reverse().map((coinData, index) => {
+    return this.props.coinHistoricalData.map((coinData, index) => {
       return (
         <Row className={index % 2 === 0 ? 'evenRow' : 'oddRow'} key={coinData.time}>
           <Col className='coinDataColLeft' xs={6} sm={6} md={6} lg={6}>
@@ -80,35 +76,20 @@ class CoinDetails extends React.Component {
     	]
     };
     const chartOptions = {
-    	///Boolean - Whether grid lines are shown across the chart
     	scaleShowGridLines : true,
-    	//String - Colour of the grid lines
     	scaleGridLineColor : "rgba(0,0,0,.05)",
-    	//Number - Width of the grid lines
     	scaleGridLineWidth : 1,
-    	//Boolean - Whether to show horizontal lines (except X axis)
     	scaleShowHorizontalLines: true,
-    	//Boolean - Whether to show vertical lines (except Y axis)
     	scaleShowVerticalLines: true,
-    	//Boolean - Whether the line is curved between points
     	bezierCurve : true,
-    	//Number - Tension of the bezier curve between points
     	bezierCurveTension : 0.4,
-    	//Boolean - Whether to show a dot for each point
     	pointDot : true,
-    	//Number - Radius of each point dot in pixels
     	pointDotRadius : 4,
-    	//Number - Pixel width of point dot stroke
     	pointDotStrokeWidth : 1,
-    	//Number - amount extra to add to the radius to cater for hit detection outside the drawn point
     	pointHitDetectionRadius : 2,
-    	//Boolean - Whether to show a stroke for datasets
     	datasetStroke : true,
-    	//Number - Pixel width of dataset stroke
     	datasetStrokeWidth : 2,
-    	//Boolean - Whether to fill the dataset with a colour
     	datasetFill : true,
-    	//Boolean - Whether to horizontally center the label and point dot inside the grid
     	offsetGridLines : false
     };
     return (
@@ -118,7 +99,7 @@ class CoinDetails extends React.Component {
 
   render() {
     if (this.props.isLoadingData && (!this.props.coinHistoricalData || !this.props.coinHistoricalData.length)) {
-      return (<div>{`Error: ${this.props.errorMessage}`}</div>)
+      return (<div>Loading...</div>)
     } else if (this.props.errorMessage) {
       return (<div>{`Error: ${this.props.errorMessage}`}</div>)
     } else {

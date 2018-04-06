@@ -5,6 +5,9 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import Images from '../../images'
 import Coinigy from '../../services/coinigy'
+import {
+  updateCurrentCoinValue,
+} from '../../modules/counter'
 import './style.css'
 
 const allAltCoins = [
@@ -30,7 +33,7 @@ const AltCoin = props => (
         <div className='altCoinName'>{`${props.coin.name} - ${props.coin.type}`}</div>
       </Row>
       <Row>
-        <div className='altCoinCost'>$750.23</div>
+        <div className='altCoinCost'>{props[props.coin.type.toLowerCase()] > 0 ? `${props[props.coin.type.toLowerCase()]} / BTC` : 'Loading...'}</div>
       </Row>
     </Col>
   </a>
@@ -39,24 +42,46 @@ const AltCoin = props => (
 const getAllAltCoins = (props) => {
   return allAltCoins.map((coin) => {
     return (
-      <AltCoin key={coin.type} onClick={() => props.changePage(coin.type)} coin={coin} />
+      <AltCoin key={coin.type} onClick={() => props.changePage(coin.type)} coin={coin} doge={props.doge} ltc={props.ltc} xmr={props.xmr} />
     )
   })
 }
 
-const Home = props => (
-  <Grid>
-    <Row>
-      {getAllAltCoins(props)}
-    </Row>
-  </Grid>
-)
+class Home extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+    }
+  }
+
+  componentDidMount() {
+    Coinigy.startCoinCostWatch(this.props.updateCurrentCoinValue)
+  }
+
+  componentWillUnmount() {
+    Coinigy.endCoinCostWatch()
+  }
+
+  render() {
+    return (
+      <Grid>
+        <Row>
+          {getAllAltCoins(this.props)}
+        </Row>
+      </Grid>
+    )
+  }
+}
 
 const mapStateToProps = state => ({
+  doge: state.counter.doge,
+  ltc: state.counter.ltc,
+  xmr: state.counter.xmr,
   isLoadingData: state.counter.isLoadingData,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  updateCurrentCoinValue,
   changePage: (coinType) => push(`/coin-details/${coinType}`)
 }, dispatch)
 
