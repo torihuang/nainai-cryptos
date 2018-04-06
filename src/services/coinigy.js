@@ -1,58 +1,36 @@
-//run "npm install socketcluster-client" in terminal before attempting to use
-import socketCluster from 'socketcluster-client';
-import config from '../devConfig.js'
+import io from 'socket.io-client';
 
-// This would be securely saved as environment variables in a real app
-const api_credentials =
-{
-  apiKey: config.coinigyKey,
-  apiSecret: config.coinigySecret,
+const socket = io.connect('wss://streamer.cryptocompare.com');
+const subscription = ['2~Poloniex~DOGE~BTC', '2~Poloniex~LTC~BTC',, '2~Poloniex~XMR~BTC', ];
+
+// Example input
+// 2~Poloniex~DOGE~BTC~4~1522940008~8812.37148306~0.00352494~5465046~67360667.6564569~26.79880285~ce8
+// 2~Poloniex~LTC~BTC~2~0.01759002~1522940112~0.006~0.00010554~15620213~12788.296706489999~222.09278973999997~ce9
+// 2~Poloniex~XMR~BTC~1~0.02541001~1522940122~0.03158991~0.00080269~16633589~5627.034454879999~140.67427241000001~ce9
+const _getCurrentValue = (message) => {
+  const messageAsArray = message.split('~')
+  if (!messageAsArray || !messageAsArray.length || messageAsArray.length < 5) return null
+  return {
+    coinType: messageAsArray[2],
+    coinValue: messageAsArray[5],
+  }
 }
 
-const options = {
-  hostname: "sc-02.coinigy.com",
-  port: "443",
-  secure: "true"
-};
-
-console.log(options);
-const SCsocket = socketCluster.connect(options);
-
-
-SCsocket.on('connect', function (status) {
-  console.log(status);
-
-  SCsocket.on('error', function (err) {
-    console.log(err);
+// Start socket connection
+const startCoinCostWatch = (updateCurrentCoinValue) => {
+  socket.emit('SubAdd', { subs: subscription });
+  socket.on("m", function(message) {
+    const newCoinValues = _getCurrentValue(message)
+    if (newCoinValues) updateCurrentCoinValue(newCoinValues.coinType, newCoinValues.coinValue)
   });
+}
 
-  SCsocket.emit("auth", api_credentials, function (err, token) {
-    if (!err && token) {
-      const scChannel = SCsocket.subscribe("ORDER-BITF--LTC--BTC");
-      // const scChannel = SCsocket.subscribe("TICKER");
-      // const scChannel = SCsocket.subscribe("TICKER");
-      console.log('scChannel', scChannel);
-      scChannel.watch(function (data) {
-        console.log(data);
-      });
+// End socket connection
+const endCoinCostWatch = () => {
+  socket.emit('SubRemove', { subs: subscription });
+}
 
-      SCsocket.emit("exchanges", null, function (err, data) {
-        if (!err) {
-          console.log('exchanges', data);
-        } else {
-          console.log(err)
-        }
-      });
-
-      SCsocket.emit("channels", "OK", function (err, data) {
-        if (!err) {
-          console.log('channels', data);
-        } else {
-          console.log(err)
-        }
-      });
-    } else {
-      console.log(err)
-    }
-  });
-});
+export default {
+  startCoinCostWatch,
+  endCoinCostWatch,
+}
